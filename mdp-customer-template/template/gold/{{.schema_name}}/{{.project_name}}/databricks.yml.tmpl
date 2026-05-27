@@ -1,0 +1,43 @@
+# databricks.yml
+# This is the configuration for the bundle {{.project_name}}.
+
+bundle:
+  name: {{.project_name }}
+
+include:
+{{- if (eq .include_job `yes`) }}
+  - resources/{{.schema_name}}_{{.project_name}}_job.yml
+{{- end -}}
+  - resources/*.yml
+{{- if (eq .primary_language `python`) }}
+  - src/py_{{.schema_name}}_{{.project_name}}.ipynb
+{{- end -}}
+
+{{- if (eq .primary_language `sql`) }}
+  - src/sql_{{.schema_name}}_{{.project_name}}.ipynb
+{{- end -}}
+
+targets:
+  # The deployment targets. See https://docs.databricks.com/en/dev-tools/bundles/deployment-modes.html
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: {{workspace_host}}
+
+  qual:
+    mode: development
+    root_path: /Shared/.bundle/prod/${bundle.name}
+    workspace:
+      host: {{template `qual_workspace_url` .}}
+      root_path: /Shared/.bundle/dev/{{template `operating_group` .}}/{{.schema_name}}/${bundle.name}
+
+  prod:
+    mode: production
+    workspace:
+      host: {{template `prod_workspace_url` .}}
+      root_path: /Shared/.bundle/dev/{{template `operating_group` .}}/{{.schema_name}}/${bundle.name}
+    run_as:
+      # This runs as {{template `prod_service_principal_name` .}} in production. Alternatively,
+      # a service principal could be used here using service_principal_name
+      user_name: {{template `prod_service_principal_name` .}}

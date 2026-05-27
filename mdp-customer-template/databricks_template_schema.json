@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "description": "What is the name of the engineering project you're working on?",
+      "order": 1
+    },
+    "project_description": {
+      "type": "string",
+      "description": "Give the engineering project a description.  What are you intending to do?  Who is requesting this?",
+      "order": 2
+    },
+    "primary_language": {
+      "type": "string",
+      "enum": [
+        "python",
+        "sql"
+      ],
+      "default": "sql",
+      "description": "What is the main language this project will be written in?",
+      "order": 3
+    },
+    "include_job": {
+      "type": "string",
+      "default": "yes",
+      "enum": [
+        "yes",
+        "no"
+      ],
+      "description": "Include a job in the bundle?",
+      "order": 4
+    },
+    "schema_name": {
+      "type": "string",
+      "description": "What is the name of the schema you're working on?",
+      "order": 5
+    }
+  },
+  "success_message": "\nYour bundle '{{.project_name}}' has been created."
+}

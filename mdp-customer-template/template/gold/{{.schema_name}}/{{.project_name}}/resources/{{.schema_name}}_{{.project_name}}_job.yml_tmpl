@@ -1,0 +1,22 @@
+# {{.project_name}}_job.yml
+# The main job for {{.project_name}}
+
+resources:
+    jobs:
+        {{.schema_name}}_{{.project_name}}_job:
+        name: {{.schema_name}}_{{.project_name}}_job
+        tasks:
+            - task_key: notebook_task
+            job_cluster_key: job_cluster
+            notebook_task:
+            {{- if .primary_language eq "python" }}
+                notebook_path: ../src/py_{{.schema_name}}_{{.project_name}}.ipynb
+            {{- end -}}
+            {{- if .primary_language eq "sql" }}
+                notebook_path: ../src/sql_{{.schema_name}}_{{.project_name}}.ipynb
+            {{- end -}}
+        job_clusters:
+            - job_cluster_key: job_cluster
+            new_cluster:
+                node_type_id: i3.xlarge
+                spark_version: 13.3.x-scala2.12
