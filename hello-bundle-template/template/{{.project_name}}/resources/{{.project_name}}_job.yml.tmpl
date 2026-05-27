@@ -1,0 +1,12 @@
+# Job definition for {{.project_name}}
+resources:
+  jobs:
+    {{.project_name}}_job:
+      name: {{.project_name}}_job
+      tasks:
+        - task_key: say_hello
+          notebook_task:
+            notebook_path: ../src/hello.py
+      email_notifications:
+        on_success:
+          - {{.notification_email}}

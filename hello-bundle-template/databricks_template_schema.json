@@ -1,0 +1,20 @@
+{
+  "welcome_message": "Welcome to the hello-bundle template.",
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "default": "my_hello_bundle",
+      "description": "Name of the bundle / project",
+      "order": 1,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "pattern_match_failure_message": "Letters, numbers, dashes, and underscores only."
+    },
+    "notification_email": {
+      "type": "string",
+      "default": "lance.burek@databricks.com",
+      "description": "Email to notify on job completion",
+      "order": 2
+    }
+  },
+  "success_message": "Bundle {{.project_name}} created. cd into it and run `databricks bundle deploy`."
+}
